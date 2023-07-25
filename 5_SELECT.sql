@@ -9,7 +9,7 @@ SELECT
   
 SELECT 
 	COUNT(*)			        AS cnt_all
-	, COUNT(exp_level)	 		AS cnt_level
+	, COUNT(exp_level)	 		 AS cnt_level
 	, COUNT(DISTINCT exp_level)
 FROM salaries
 LIMIT 10;
