@@ -9,7 +9,7 @@ SELECT
   
 SELECT 
 	COUNT(*)			        AS cnt_all
-	, COUNT(exp_level)	 		 AS cnt_level
+	, COUNT(exp_level)	 		AS cnt_level
 	, COUNT(DISTINCT exp_level)
 FROM salaries
 LIMIT 10;
@@ -123,8 +123,36 @@ LIMIT 100;
 з/п менша за 20 000 - Категорія 1, 
 з/п менша за 50 000 - Категорія 2, 
 з/п менша за 100 000 - Категорія 3, 
-з/п більша за 100 000 - Категорія 4
+з/п більша за 100 000 - Категорія 4 */
 
 
--- 9. Дослідити всі колонки на наявність відсутніх значень, порівнявши кількість рядків таблиці з кількістю значень відповідної колонки
--- 10. Порахувати кількість працівників в таблиці, які в 2023 році працюють на компанії розміру "М" і отримують з/п вищу за $100 000
+SELECT *
+	, CASE  
+		WHEN salary_in_usd <= 20000 THEN 'Категорія 1'
+		WHEN salary_in_usd <= 50000 THEN 'Категорія 2'
+		WHEN salary_in_usd <= 100000 THEN 'Категорія 3'
+		ELSE 'Категорія 4' END AS salary_category
+FROM salaries
+LIMIT 100;
+
+
+/* 9. Дослідити всі колонки на наявність відсутніх значень, 
+порівнявши кількість рядків таблиці з кількістю значень відповідної 
+колонки */
+
+SELECT 
+	COUNT(*)					AS total_nmb
+	, COUNT(job_title)				AS dist_nmb
+	, COUNT(*) - COUNT(job_title) 			AS null_nmb
+FROM salaries;
+
+/* 10. Порахувати кількість працівників в таблиці, 
+які в 2023 році працюють на компанії розміру "М" і отримують 
+з/п вищу за $100 000 */
+
+SELECT COUNT(salary_in_usd)
+FROM salaries
+WHERE 1=1
+	AND year = '2023'
+	AND company_size = 'M'
+	AND salary_in_usd >= 100000;
