@@ -67,4 +67,140 @@ WHERE 1=1
 -- 	AND job_title iLIKE ('data_A%') 
 LIMIT 20;
 
+# Приклади рішень для вправ: ----------------------
 
+/*
+1. Вивести всіх співробітників, 
+які в 2023 отримували з/п більшу за $300тис.
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND year = 2023
+	AND salary_in_usd >= 300000
+;
+
+/*
+2. Вивести всіх співробітників, 
+які в 2023 отримували з/п більшу за $300тис. 
+та не працювали в великих компаніях 
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND year = 2023
+	AND salary_in_usd >= 300000
+	AND company_size != 'L'
+;
+
+/*
+3. Чи є співробітники, які
+працювали на Українську компанію 
+повністю віддаленно?
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND remote_ratio = 100
+	AND company_location = 'UA'
+;
+
+/*
+4. Вивести всіх співробітників, 
+які в 2023 році 
+працюючи в Німетчині (company_location = 'DE') 
+отримували з/п більшу за $100тис.
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND year = 2023
+	AND salary_in_usd >= 100000
+	AND company_location = 'DE'
+;
+	
+/*
+5. Доопрацювати попередній запит:
+Вивести тільки ТОП 5 співробітників 
+за рівнем з/п з попередньої таблиці
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND year = 2023
+	AND salary_in_usd >= 100000
+	AND company_location = 'DE'
+ORDER BY salary_in_usd DESC
+LIMIT 5;
+
+/*
+6. Додати в попередню таблицю окрім 
+спеціалістів з Німетчини спеціалістів з Канади (CA).
+*/
+
+SELECT *
+FROM salaries
+WHERE 1=1
+	AND year = 2023
+	AND salary_in_usd >= 100000
+	AND (company_location = 'DE'
+	OR company_location = 'CA')
+ORDER BY salary_in_usd DESC
+LIMIT 5;
+
+/*
+7. Надати перелік країн, в яких 
+в 2021 році 
+спеціалісти "ML Engineer" та "Data Scientist"
+отримувати з/п в діапазоні між $50тис і $100тис
+*/
+
+SELECT DISTINCT company_location
+FROM salaries
+WHERE 1=1
+	AND year = 2021
+	AND (job_title = 'ML Engineer'
+	OR job_title = 'Data Scientist')
+	AND salary_in_usd BETWEEN 50000 AND 100000
+;
+
+/*
+8. Порахувати кількість спеціалістів,
+які працюючи в середніх компаніях 
+(company_size = M) 
+та в великих компаніях 
+(company_size = L)
+працювали віддалено 
+(remote_ratio=100 або remote_ratio=50). 
+Є багато різних варіантів прописання таких фільтрів,
+доречно експерементувати.
+*/
+
+SELECT COUNT(year)
+FROM salaries
+WHERE 1=1
+	AND company_size IN ('M', 'L')
+	AND remote_ratio NOT IN (0)
+;
+
+/*
+9. Вивести кількість країн, які починаються на "С"
+*/
+
+SELECT COUNT(DISTINCT company_location)
+FROM salaries
+WHERE company_location LIKE 'C%';
+
+/*
+10. Вивести професії, назва яких 
+не складається з трьох слів
+*/
+
+SELECT DISTINCT job_title
+FROM salaries
+WHERE job_title NOT LIKE '% % %'
