@@ -60,7 +60,8 @@ SELECT
 	ROUND(AVG(salary_in_usd), 2) 	AS avg_salary_in_usd
 	, MIN(salary_in_usd)			AS min_salary_in_usd
 	, MAX(salary_in_usd)			AS max_salary_in_usd
-FROM salaries;
+FROM salaries
+WHERE year = 2023;
 
 /* #7. Вивести 5 найвищих заробітних плат в 2023 році для представників спеціальності 
 ML Engineer. Заробітні плати перевести в гривні. */
