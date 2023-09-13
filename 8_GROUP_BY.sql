@@ -39,3 +39,11 @@ ORDER BY 2 ASC;
 Для кожного року навести дані щодо середньої заробітної плати та кількість спеціалістів в таблиці.
 Результат експортувати в .csv файл, імпортувати в Power BI і побудувати доречну візуалізацію отриманих даних
 */
+
+
+SELECT
+	year
+	, ROUND(AVG(salary_in_usd),2) 	AS avg_salary
+	, COUNT(*) 			AS emp_nmb
+FROM salaries
+GROUP BY 1;
