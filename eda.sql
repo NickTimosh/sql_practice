@@ -42,3 +42,19 @@ SELECT CORR(revenues,profits) AS rev_profits,
   FROM fortune500;
 
 -- Exploring categorical data and instractured text ----------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
