@@ -42,6 +42,9 @@ SELECT CORR(revenues,profits) AS rev_profits,
   FROM fortune500;
 
 -- Exploring categorical data and instractured text ----------------------------------------------------
+SELECT category, count(*) FROM table GROUP BY 1 ORDER BY 2 DESC; -- mistakes? duplicates? errors?
+
+-- change text data, regexp...
 
 
 
