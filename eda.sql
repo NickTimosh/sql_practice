@@ -46,18 +46,4 @@ SELECT category, count(*) FROM table GROUP BY 1 ORDER BY 2 DESC; -- mistakes? du
 
 -- change text data, regexp...
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- Data Science Market Data Exploration ----------------------------------------------------------------
