@@ -3,7 +3,8 @@ SELECT * FROM InvoiceLine il LIMIT 100;
 SELECT * FROM Track t LIMIT 100; 
 SELECT * FROM Album a LIMIT 100; 
 SELECT * FROM Artist a LIMIT 100; 
- 
+
+-- Додати Колонки з іншої таблиці
 SELECT  
  t.TrackId  
  , t.Name  
@@ -15,7 +16,8 @@ JOIN Album a  	ON t.AlbumId = a.AlbumId
 JOIN Artist art ON a.ArtistId = art.ArtistId  
 WHERE art.Name LIKE "A%" 
 LIMIT 100; 
- 
+
+-- Згрупувати дані після Джойнів
 SELECT  
  art.Name 
  , COUNT(t.TrackId) 
