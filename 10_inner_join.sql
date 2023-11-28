@@ -4,6 +4,13 @@ SELECT * FROM Track t LIMIT 100;
 SELECT * FROM Album a LIMIT 100; 
 SELECT * FROM Artist a LIMIT 100; 
 
+SELECT *
+FROM Invoice i
+JOIN InvoiceLine il ON i.InvoiceId = il.InvoiceId
+JOIN Track t ON il.Trackid = t.Trackid  
+JOIN  
+
+
 -- Додати Колонки з іншої таблиці
 SELECT  
  t.TrackId  
