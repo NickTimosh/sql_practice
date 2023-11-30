@@ -197,8 +197,8 @@ FROM salaries
 WHERE company_location LIKE 'C%';
 
 /*
-10. Вивести професії, назва яких 
-не складається з трьох слів
+10. Вивести професії, назви яких 
+не складаються з трьох слів
 */
 
 SELECT DISTINCT job_title
