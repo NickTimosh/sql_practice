@@ -203,4 +203,10 @@ WHERE company_location LIKE 'C%';
 
 SELECT DISTINCT job_title
 FROM salaries
-WHERE job_title NOT LIKE '% % %'
+WHERE job_title NOT LIKE '% % %' -- цей запит не поверне професії, які складаються з 4х слів
+
+-- Варіант вирішення з врахуванням 4х слів і більше:	
+SELECT DISTINCT job_title 
+FROM salaries
+WHERE LENGTH (job_title) - LENGTH(REPLACE(job_title,' ','')) != 2 -- всі професії, в назвах яких НЕ 2 знаки пробілу
+GROUP BY 1;
