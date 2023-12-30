@@ -13,7 +13,7 @@ FROM salaries;
 -- Variance var_samp
 -- Standard deviation
 
--- Sammarize by group
+-- Sammarize by group.
 
 SELECT 
   exp_level
