@@ -1,49 +1,61 @@
--- Select a few rows to check (no order) ---------------------------------------
-SELECT count(*) FROM salaries;
+SELECT *
+FROM salaries
+LIMIT 100;
 
---  Count missing values ----------------------------------------------------
-SELECT 
-    COUNT(*) - COUNT(salary_in_usd) AS missing
+SELECT COUNT(*)
 FROM salaries;
 
--- A few words about data types ----------------------------------------------------
-
--- Summarizing and aggregating numeric data
--- Range: Min and Max
--- Variance var_samp
--- Standard deviation
-
--- Sammarize by group.
-
 SELECT 
-  exp_level
-, min(salary)
-, avg(salary)
-, max(salary)...
+	COUNT(*)
+	, COUNT(*) - COUNT(salary_in_usd) AS missing_values
+FROM salaries;
+
+-- categorical data
+SELECT 
+	job_title
+	, COUNT(*) -- to check not only distribution, but spelling as well
+FROM salaries
+GROUP BY 1
+ORDER BY 2 DESC
+-- LIMIT 10 and generate a bar chart
+
+-- numeric data
+SELECT 
+	job_title
+	, exp_level
+	, min(salary_in_usd)
+	, max(salary_in_usd)
+	, ROUND(avg(salary_in_usd),2) AS avg
+	, ROUND(variance(salary_in_usd),2) As var
+	, ROUND(stddev(salary_in_usd),2) as stddev
+FROM salaries
+GROUP BY 1,2
+ORDER BY 1,2
+
+-- distribution
+SELECT -- not easy to explore
+	salary_in_usd
+	, COUNT(*)
 FROM salaries
 GROUP BY 1;
 
--- Exploring distributions for finding errors, outliers...
+SELECT -- trancate allows to make 160000 from 154560
+	TRUNC(salary_in_usd,-1)
+	, COUNT(*)
+FROM salaries
+GROUP BY 1;
 
-SELECT 
-    remote_rate
-    , COUNT(*)
-FROM salaries -- for small number of discrete values
+SELECT
+	CASE 
+		WHEN salary_in_usd <=10000 THEN 'A'
+		WHEN salary_in_usd <=50000 THEN 'B'
+		WHEN salary_in_usd <=100000 THEN 'C'
+		WHEN salary_in_usd <=200000 THEN 'D'
+		WHEN salary_in_usd > 200000 THEN 'E' END AS salary_cat
+	, COUNT(*)
+FROM salaries
+GROUP BY 1;
 
--- Generate series to create bins
-...
-    
--- More summary functions:
-SELECT CORR(revenues,profits) AS rev_profits,
-	   -- Correlation between revenues and assets
-       CORR(revenues, assets) AS rev_assets,
-       -- Correlation between revenues and equity
-       CORR(revenues, equity) AS rev_equity 
-  FROM fortune500;
 
--- Exploring categorical data and instractured text ----------------------------------------------------
-SELECT category, count(*) FROM table GROUP BY 1 ORDER BY 2 DESC; -- mistakes? duplicates? errors?
-
--- change text data, regexp...
-
--- Data Science Market Data Exploration ----------------------------------------------------------------
+SELECT corr(remote_ratio, salary_in_usd)
+FROM salaries;
