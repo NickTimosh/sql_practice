@@ -1,10 +1,11 @@
+-- звичайна агрегація з групуванням
 select 
 	job_title 
 	, ROUND(AVG(salary_in_usd),0) as avg_salary
 from salaries
 group by 1
 
-
+-- використання віконних функцій агрегації
 with cte as (
 	select 
 		job_title 
@@ -39,3 +40,19 @@ with cte as (
 select *
 from cte
 where salary_in_usd > avg_salary
+
+-- ранжування таблиці (для кожного замовника рейтинг інвойсів за сумою)
+WITH cte AS (
+	SELECT
+		InvoiceId 
+		, CustomerId
+		, Total
+		, ROW_NUMBER() 	OVER(PARTITION BY CustomerId ORDER BY Total DESC) AS invoice_nmb
+		, RANK() 		OVER(PARTITION BY CustomerId ORDER BY Total DESC) AS invoice_rank
+		, DENSE_RANK() 	OVER(PARTITION BY CustomerId ORDER BY Total DESC) AS invoice_rank
+	FROM Invoice i 
+	ORDER BY CustomerId
+) 
+SELECT *
+FROM cte
+WHERE invoice_nmb = 2
