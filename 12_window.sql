@@ -56,3 +56,26 @@ WITH cte AS (
 SELECT *
 FROM cte
 WHERE invoice_nmb = 2
+
+-- зміщення відносно поточного рядка
+
+SELECT 
+	InvoiceId 
+	, CustomerId 
+	, InvoiceDate 
+	, Total
+	, LAG(Total, 1) OVER(Partition by CustomerId Order By InvoiceDate) AS lag_total
+	, LAG(InvoiceDate, 1) OVER(Partition by CustomerId Order By InvoiceDate) AS lag_total
+	, JULIANDAY(InvoiceDate) - JULIANDAY(LAG(InvoiceDate, 1) OVER(Partition by CustomerId Order By InvoiceDate))  AS diff_in_days
+	, LEAD(Total, 1) OVER(Partition by CustomerId Order By InvoiceDate) AS lead_total
+FROM Invoice i 
+ORDER By CustomerId 
+
+
+SELECT 
+	InvoiceId 
+	, CustomerId 
+	, InvoiceDate 
+	, Total
+	, FIRST_VALUE(Total) OVER(PARTITION BY CustomerId ORDER BY InvoiceDate ASC) AS first_amount
+FROM Invoice i 
