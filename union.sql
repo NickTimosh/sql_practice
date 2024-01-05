@@ -12,7 +12,7 @@ UNION
 
 select 
 	'max_salary'			as parameter
-	, MAX(salary_in_usd) 	as value
+	, MAX(salary_in_usd) 		as value
 from salaries s 
 ;
 
@@ -44,5 +44,24 @@ select
 	, MIN(salary_in_usd) 	as value
 from salaries s;
 
--- union ---------------------------------------------
+-- Intersect ---------------------------------------------
 
+SELECT email
+FROM Customer
+
+INTERSECT
+
+SELECT Email
+FROM Employee
+;
+
+-----
+
+SELECT email
+FROM Customer
+
+EXCEPT
+
+SELECT Email
+FROM Employee
+;
